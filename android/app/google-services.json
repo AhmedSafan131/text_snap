@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465730932885",
+    "project_id": "textsnap-fe3f0",
+    "storage_bucket": "textsnap-fe3f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465730932885:android:a8d99cdd1c72926e204b9c",
+        "android_client_info": {
+          "package_name": "com.example.text_snap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465730932885-l6trdlrr8uj1t6tokobdpl57ka5jlmbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaLdvR8EnsEKfLZr2-ir9VuVB9MNjaGRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465730932885-l6trdlrr8uj1t6tokobdpl57ka5jlmbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
