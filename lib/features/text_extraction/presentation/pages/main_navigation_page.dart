@@ -16,15 +16,10 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   int _currentIndex = 0;
   final ImagePickerService _imagePickerService = ImagePickerService();
 
-  final List<Widget> _pages = [
-    const HistoryPage(),
-    const SizedBox(), // Placeholder for middle tab (won't be shown)
-    const ProfilePage(),
-  ];
+  final List<Widget> _pages = [const HistoryPage(), const SizedBox(), const ProfilePage()];
 
   void _onTabTapped(int index) {
     if (index == 1) {
-      // Middle tab - show image picker options
       _showImagePickerOptions();
     } else {
       setState(() {
@@ -46,7 +41,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Handle bar
             Container(
               width: 40,
               height: 4,
@@ -54,14 +48,12 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             ),
             const SizedBox(height: 24),
 
-            // Title
             const Text(
               'Add Photo',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
             ),
             const SizedBox(height: 24),
 
-            // Camera Option
             _buildPickerOption(
               icon: Icons.camera_alt,
               title: 'Take Photo',
@@ -76,7 +68,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             ),
             const SizedBox(height: 12),
 
-            // Gallery Option
             _buildPickerOption(
               icon: Icons.photo_library,
               title: 'Choose from Gallery',
@@ -152,7 +143,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: [
-          // Main nav bar
           Container(
             margin: const EdgeInsets.all(16),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -171,7 +161,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             ),
           ),
 
-          // Floating + button positioned at top
           Positioned(top: 0, child: _buildAddButton()),
         ],
       ),

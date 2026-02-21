@@ -69,11 +69,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     const SizedBox(height: 40),
 
-                    // Logo or App Name
                     Image.asset('assets/images/logo2.png', height: 130, fit: BoxFit.contain),
                     const SizedBox(height: 15),
 
-                    // Title
                     const Text(
                       'Create Account',
                       style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
@@ -87,7 +85,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 40),
 
-                    // Name Field
                     CustomTextField(
                       controller: _nameController,
                       label: 'Full Name',
@@ -99,7 +96,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Email Field
                     CustomTextField(
                       controller: _emailController,
                       label: 'Email',
@@ -111,7 +107,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Password Field
                     CustomTextField(
                       controller: _passwordController,
                       label: 'Password',
@@ -131,7 +126,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Confirm Password Field
                     CustomTextField(
                       controller: _confirmPasswordController,
                       label: 'Confirm Password',
@@ -151,11 +145,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Sign Up Button
                     CustomButton(text: 'Sign Up', isLoading: isLoading, onPressed: _signUp),
                     const SizedBox(height: 16),
 
-                    // Sign In Link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

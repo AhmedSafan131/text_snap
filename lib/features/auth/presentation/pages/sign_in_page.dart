@@ -60,11 +60,9 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     const SizedBox(height: 40),
 
-                    // Logo or App Name
                     Image.asset('assets/images/logo2.png', height: 130, fit: BoxFit.contain),
                     const SizedBox(height: 15),
 
-                    // Title
                     const Text(
                       'Welcome Back',
                       style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
@@ -78,7 +76,6 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     const SizedBox(height: 40),
 
-                    // Email Field
                     CustomTextField(
                       controller: _emailController,
                       label: 'Email',
@@ -90,7 +87,6 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Password Field
                     CustomTextField(
                       controller: _passwordController,
                       label: 'Password',
@@ -110,11 +106,9 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Sign In Button
                     CustomButton(text: 'Sign In', isLoading: isLoading, onPressed: _signIn),
                     const SizedBox(height: 16),
 
-                    // Sign Up Link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
