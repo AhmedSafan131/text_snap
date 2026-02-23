@@ -50,7 +50,16 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile'), elevation: 0),
-      body: BlocBuilder<AuthBloc, AuthState>(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is Unauthenticated) {
+            Navigator.of(context).pushNamedAndRemoveUntil('/signin', (route) => false);
+          } else if (state is AuthError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message), backgroundColor: AppColors.error));
+          }
+        },
         builder: (context, state) {
           if (state is! Authenticated) {
             return const Center(child: CircularProgressIndicator());

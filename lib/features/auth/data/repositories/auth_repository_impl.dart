@@ -75,10 +75,12 @@ class AuthRepositoryImpl implements AuthRepository {
 
   String _getErrorMessage(String code) {
     switch (code) {
+      case 'invalid-credential':
+        return 'Wrong password or wrong email';
       case 'user-not-found':
-        return 'No user found with this email';
+        return 'Wrong email';
       case 'wrong-password':
-        return 'Incorrect password';
+        return 'Wrong password';
       case 'email-already-in-use':
         return 'This email is already registered';
       case 'invalid-email':

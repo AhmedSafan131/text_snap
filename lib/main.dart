@@ -51,8 +51,11 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
+      buildWhen: (previous, current) {
+        return current is AuthInitial || current is Authenticated || current is Unauthenticated;
+      },
       builder: (context, state) {
-        if (state is AuthLoading || state is AuthInitial) {
+        if (state is AuthInitial) {
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
 

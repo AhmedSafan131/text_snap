@@ -7,6 +7,7 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
+import '../../../text_extraction/presentation/pages/main_navigation_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -41,7 +42,11 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthError) {
+          if (state is Authenticated) {
+            Navigator.of(
+              context,
+            ).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const MainNavigationPage()), (route) => false);
+          } else if (state is AuthError) {
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text(state.message), backgroundColor: AppColors.error));
