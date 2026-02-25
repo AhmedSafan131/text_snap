@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/image_picker_service.dart';
 import 'history_page.dart';
@@ -60,7 +61,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
               subtitle: 'Use your camera',
               onTap: () async {
                 Navigator.pop(context);
-                final imagePath = await _imagePickerService.pickImageFromCamera();
+                final imagePath = await _imagePickerService.pickImage(ImageSource.camera);
                 if (imagePath != null && mounted) {
                   _handleImagePicked(imagePath);
                 }
@@ -74,7 +75,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
               subtitle: 'Select from your photos',
               onTap: () async {
                 Navigator.pop(context);
-                final imagePath = await _imagePickerService.pickImageFromGallery();
+                final imagePath = await _imagePickerService.pickImage(ImageSource.gallery);
                 if (imagePath != null && mounted) {
                   _handleImagePicked(imagePath);
                 }

@@ -1,32 +1,34 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class LocalProfileService {
-  static const String _keyDisplayName = 'user_display_name';
-  static const String _keyProfileImagePath = 'user_profile_image_path';
+  static const String _boxName = 'profile_box';
+  static const String _keyDisplayName = 'display_name';
+  static const String _keyProfileImagePath = 'profile_image_path';
+
+  Box get _box => Hive.box(_boxName);
 
   Future<void> saveDisplayName(String name) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_keyDisplayName, name);
+    await _box.put(_keyDisplayName, name);
   }
 
-  Future<String?> getDisplayName() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_keyDisplayName);
+  String? getDisplayName() {
+    return _box.get(_keyDisplayName);
   }
 
   Future<void> saveProfileImagePath(String path) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_keyProfileImagePath, path);
+    await _box.put(_keyProfileImagePath, path);
   }
 
-  Future<String?> getProfileImagePath() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_keyProfileImagePath);
+  String? getProfileImagePath() {
+    return _box.get(_keyProfileImagePath);
   }
 
   Future<void> clearProfile() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_keyDisplayName);
-    await prefs.remove(_keyProfileImagePath);
+    await _box.delete(_keyDisplayName);
+    await _box.delete(_keyProfileImagePath);
+  }
+
+  static Future<void> openBox() async {
+    await Hive.openBox(_boxName);
   }
 }

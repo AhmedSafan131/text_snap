@@ -5,11 +5,7 @@ import '../entities/app_user.dart';
 abstract class AuthRepository {
   Future<Either<Failure, AppUser>> signInWithEmail({required String email, required String password});
 
-  Future<Either<Failure, AppUser>> signUpWithEmail({
-    required String email,
-    required String password,
-    required String displayName,
-  });
+  Future<Either<Failure, AppUser>> signUpWithEmail({required String email, required String password});
 
   Future<Either<Failure, void>> signOut();
 

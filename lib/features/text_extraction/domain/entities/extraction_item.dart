@@ -1,21 +1,20 @@
-class ExtractionItem {
+import 'package:hive/hive.dart';
+
+part 'extraction_item.g.dart';
+
+@HiveType(typeId: 0)
+class ExtractionItem extends HiveObject {
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final String imagePath;
+
+  @HiveField(2)
   final String extractedText;
+
+  @HiveField(3)
   final DateTime timestamp;
 
   ExtractionItem({required this.id, required this.imagePath, required this.extractedText, required this.timestamp});
-
-  Map<String, dynamic> toJson() {
-    return {'id': id, 'imagePath': imagePath, 'extractedText': extractedText, 'timestamp': timestamp.toIso8601String()};
-  }
-
-  factory ExtractionItem.fromJson(Map<String, dynamic> json) {
-    return ExtractionItem(
-      id: json['id'],
-      imagePath: json['imagePath'],
-      extractedText: json['extractedText'],
-      timestamp: DateTime.parse(json['timestamp']),
-    );
-  }
 }

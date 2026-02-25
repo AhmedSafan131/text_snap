@@ -31,14 +31,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _loadProfile();
   }
 
-  Future<void> _loadProfile() async {
+  void _loadProfile() {
     try {
       final localProfileService = LocalProfileService();
 
-      final localName = await localProfileService.getDisplayName();
-      final localImage = await localProfileService.getProfileImagePath();
-
-      if (!mounted) return;
+      final localName = localProfileService.getDisplayName();
+      final localImage = localProfileService.getProfileImagePath();
 
       setState(() {
         if (localImage != null) {

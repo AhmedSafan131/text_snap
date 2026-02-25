@@ -1,12 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'core/theme/app_theme.dart';
+import 'core/services/history_service.dart';
+import 'core/services/local_profile_service.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 import 'features/auth/presentation/bloc/auth_state.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart';
 import 'features/auth/presentation/pages/sign_up_page.dart';
+import 'features/text_extraction/domain/entities/extraction_item.dart';
 import 'features/text_extraction/presentation/pages/main_navigation_page.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart';
@@ -17,7 +21,11 @@ void main() async {
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Initialize dependencies
+  await Hive.initFlutter();
+  Hive.registerAdapter(ExtractionItemAdapter());
+  await HistoryService.openBox();
+  await LocalProfileService.openBox();
+
   await initializeDependencies();
 
   runApp(const MyApp());

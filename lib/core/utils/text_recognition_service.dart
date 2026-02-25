@@ -9,12 +9,6 @@ class TextRecognitionService {
     return recognizedText.text;
   }
 
-  Future<RecognizedText> extractTextWithDetails(String imagePath) async {
-    final inputImage = InputImage.fromFilePath(imagePath);
-    final RecognizedText recognizedText = await _textRecognizer.processImage(inputImage);
-    return recognizedText;
-  }
-
   void dispose() {
     _textRecognizer.close();
   }

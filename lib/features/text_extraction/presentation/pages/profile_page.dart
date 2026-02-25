@@ -25,18 +25,16 @@ class _ProfilePageState extends State<ProfilePage> {
     _loadProfile();
   }
 
-  Future<void> _loadProfile() async {
+  void _loadProfile() {
     try {
       final localProfileService = LocalProfileService();
-      final name = await localProfileService.getDisplayName();
-      final imagePath = await localProfileService.getProfileImagePath();
+      final name = localProfileService.getDisplayName();
+      final imagePath = localProfileService.getProfileImagePath();
 
-      if (mounted) {
-        setState(() {
-          _localName = name;
-          _localImagePath = imagePath;
-        });
-      }
+      setState(() {
+        _localName = name;
+        _localImagePath = imagePath;
+      });
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(

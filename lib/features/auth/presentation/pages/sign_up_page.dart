@@ -7,6 +7,8 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
+import '../widgets/password_text_field.dart';
+import '../../../../core/services/local_profile_service.dart';
 import '../../../text_extraction/presentation/pages/main_navigation_page.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -22,8 +24,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
@@ -37,11 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void _signUp() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-        SignUpRequested(
-          email: _emailController.text.trim(),
-          password: _passwordController.text,
-          displayName: _nameController.text.trim(),
-        ),
+        SignUpRequested(email: _emailController.text.trim(), password: _passwordController.text),
       );
     }
   }
@@ -52,6 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is Authenticated) {
+            LocalProfileService().saveDisplayName(_nameController.text.trim());
             Navigator.of(
               context,
             ).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const MainNavigationPage()), (route) => false);
@@ -112,41 +109,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    CustomTextField(
-                      controller: _passwordController,
-                      label: 'Password',
-                      hint: 'Enter your password',
-                      obscureText: _obscurePassword,
-                      prefixIcon: Icons.lock_outline,
-                      suffixIcon: IconButton(
-                        icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
-                      validator: Validators.validatePassword,
-                      enabled: !isLoading,
-                    ),
+                    PasswordTextField(controller: _passwordController, enabled: !isLoading),
                     const SizedBox(height: 16),
 
-                    CustomTextField(
+                    PasswordTextField(
                       controller: _confirmPasswordController,
                       label: 'Confirm Password',
                       hint: 'Re-enter your password',
-                      obscureText: _obscureConfirmPassword,
-                      prefixIcon: Icons.lock_outline,
-                      suffixIcon: IconButton(
-                        icon: Icon(_obscureConfirmPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-                        onPressed: () {
-                          setState(() {
-                            _obscureConfirmPassword = !_obscureConfirmPassword;
-                          });
-                        },
-                      ),
-                      validator: (value) => Validators.validateConfirmPassword(_passwordController.text, value),
                       enabled: !isLoading,
+                      validator: (value) => Validators.validateConfirmPassword(_passwordController.text, value),
                     ),
                     const SizedBox(height: 24),
 

@@ -11,61 +11,45 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl({required this.remoteDataSource});
 
-  @override
-  Future<Either<Failure, AppUser>> signInWithEmail({required String email, required String password}) async {
+  Future<Either<Failure, T>> _onCall<T>(Future<T> Function() operation) async {
     try {
+      return Right(await operation());
+    } on FirebaseAuthException catch (e) {
+      return Left(AuthFailure(_getErrorMessage(e.code)));
+    } on AuthException catch (e) {
+      return Left(AuthFailure(e.message));
+    } catch (_) {
+      return Left(AuthFailure('An unexpected error occurred'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AppUser>> signInWithEmail({required String email, required String password}) {
+    return _onCall(() async {
       final user = await remoteDataSource.signInWithEmail(email: email, password: password);
-      return Right(user.toEntity());
-    } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure(_getErrorMessage(e.code)));
-    } on AuthException catch (e) {
-      return Left(AuthFailure(e.message));
-    } catch (e) {
-      return Left(AuthFailure('An unexpected error occurred'));
-    }
+      return user.toEntity();
+    });
   }
 
   @override
-  Future<Either<Failure, AppUser>> signUpWithEmail({
-    required String email,
-    required String password,
-    required String displayName,
-  }) async {
-    try {
-      final user = await remoteDataSource.signUpWithEmail(email: email, password: password, displayName: displayName);
-      return Right(user.toEntity());
-    } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure(_getErrorMessage(e.code)));
-    } on AuthException catch (e) {
-      return Left(AuthFailure(e.message));
-    } catch (e) {
-      return Left(AuthFailure('An unexpected error occurred'));
-    }
+  Future<Either<Failure, AppUser>> signUpWithEmail({required String email, required String password}) {
+    return _onCall(() async {
+      final user = await remoteDataSource.signUpWithEmail(email: email, password: password);
+      return user.toEntity();
+    });
   }
 
   @override
-  Future<Either<Failure, void>> signOut() async {
-    try {
-      await remoteDataSource.signOut();
-      return const Right(null);
-    } on AuthException catch (e) {
-      return Left(AuthFailure(e.message));
-    } catch (e) {
-      return Left(AuthFailure('Failed to sign out'));
-    }
+  Future<Either<Failure, void>> signOut() {
+    return _onCall(() => remoteDataSource.signOut());
   }
 
   @override
-  Future<Either<Failure, AppUser?>> getCurrentUser() async {
-    try {
+  Future<Either<Failure, AppUser?>> getCurrentUser() {
+    return _onCall(() async {
       final user = await remoteDataSource.getCurrentUser();
-      if (user == null) return const Right(null);
-      return Right(user.toEntity());
-    } on AuthException catch (e) {
-      return Left(AuthFailure(e.message));
-    } catch (e) {
-      return Left(AuthFailure('Failed to get current user'));
-    }
+      return user?.toEntity();
+    });
   }
 
   @override

@@ -7,6 +7,7 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
+import '../widgets/password_text_field.dart';
 import '../../../text_extraction/presentation/pages/main_navigation_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -20,7 +21,6 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -92,23 +92,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    CustomTextField(
-                      controller: _passwordController,
-                      label: 'Password',
-                      hint: 'Enter your password',
-                      obscureText: _obscurePassword,
-                      prefixIcon: Icons.lock_outline,
-                      suffixIcon: IconButton(
-                        icon: Icon(_obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
-                      validator: Validators.validatePassword,
-                      enabled: !isLoading,
-                    ),
+                    PasswordTextField(controller: _passwordController, enabled: !isLoading),
                     const SizedBox(height: 24),
 
                     CustomButton(text: 'Sign In', isLoading: isLoading, onPressed: _signIn),

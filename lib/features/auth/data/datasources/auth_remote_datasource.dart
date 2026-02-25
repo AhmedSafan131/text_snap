@@ -6,7 +6,7 @@ import '../models/user_model.dart';
 abstract class AuthRemoteDataSource {
   Future<UserModel> signInWithEmail({required String email, required String password});
 
-  Future<UserModel> signUpWithEmail({required String email, required String password, required String displayName});
+  Future<UserModel> signUpWithEmail({required String email, required String password});
 
   Future<void> signOut();
 
@@ -30,27 +30,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserModel> signUpWithEmail({
-    required String email,
-    required String password,
-    required String displayName,
-  }) async {
+  Future<UserModel> signUpWithEmail({required String email, required String password}) async {
     final userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
 
     if (userCredential.user == null) {
       throw AuthException('Sign up failed');
     }
 
-    // Update display name
-    await userCredential.user!.updateDisplayName(displayName);
-    await userCredential.user!.reload();
-
-    final updatedUser = firebaseAuth.currentUser;
-    if (updatedUser == null) {
-      throw AuthException('Failed to get updated user');
-    }
-
-    return UserModel.fromFirebaseUser(updatedUser);
+    return UserModel.fromFirebaseUser(userCredential.user!);
   }
 
   @override
